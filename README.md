@@ -1,4 +1,2 @@
 # test-git
-123
-321
-123321
+This github just for me to learn github action
