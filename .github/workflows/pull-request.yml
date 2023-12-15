@@ -16,7 +16,7 @@ jobs:
     runs-on: ['self-hosted', 'default-runner']
     steps:
       - name: Echo Value
-        run: echo "${{ var.AWS_ROLE }} and ${{ var.AWS_REGION }}"
+        run: echo "${{ vars.AWS_ROLE }} and ${{ vars.AWS_REGION }}"
 
       - name: Copy .env
         run: echo "cp .env.${{ vars.ENV }} .env"
