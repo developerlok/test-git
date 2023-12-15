@@ -1,0 +1,25 @@
+name: Pull Request Check #Workflow name
+on: #trigger
+  pull_request:
+    types: ['opened', 'synchronize']
+    branches:
+      - 'development'
+      - 'release/**'
+      - 'master'
+    paths-ignore:
+      - '**/CHANGELOG.md'
+      - '**/package.json'
+jobs:
+  main: #Job names
+    environment:
+      name: ${{ github.base_ref == 'master' && 'production' || contains(github.base_ref,'release/') && 'staging' || 'development' }}
+    runs-on: ['self-hosted', 'default-runner']
+    steps:
+      - name: Echo Value
+        run: echo "${{ var.AWS_ROLE }} and ${{ var.AWS_REGION }}"
+
+      - name: Copy .env
+        run: echo "cp .env.${{ vars.ENV }} .env"
+
+      - name: Build and run test
+        run: echo "${{ secrets.HK01_DIGITAL_NPM_TOKEN }}"
