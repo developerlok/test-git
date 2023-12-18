@@ -1,6 +1,6 @@
 name: Pull Request Check #Workflow name
 on: #trigger
-  pull_request:
+  pull_request: # only for create or update pull request
     types: ['opened', 'synchronize']
     branches:
       - 'development'
