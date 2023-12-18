@@ -17,12 +17,12 @@ jobs:
     steps:
       - name: Set ENV Variables
         run: |
-          echo "TRAVIS_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+          echo "TRAVIS_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
           echo "TRAVIS_BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
         
       - name: Echo Value
         run: |
-          echo "$GITHUB_REF"
+          echo "$GITHUB_REF and ${{ github.head_ref }}"
           echo "$TRAVIS_BRANCH and $TRAVIS_BUILD_NUMBER"
           echo "${{ vars.AWS_ROLE }} and ${{ vars.AWS_REGION }}"
 
