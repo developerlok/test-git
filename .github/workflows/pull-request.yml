@@ -22,6 +22,7 @@ jobs:
         
       - name: Echo Value
         run: |
+          echo "$GITHUB_REF"
           echo "$TRAVIS_BRANCH and $TRAVIS_BUILD_NUMBER"
           echo "${{ vars.AWS_ROLE }} and ${{ vars.AWS_REGION }}"
 
