@@ -23,7 +23,7 @@ jobs:
       - name: Echo Value
         run: |
           echo "$TRAVIS_BRANCH and $TRAVIS_BUILD_NUMBER"
-          echo "${{ var.AWS_ROLE }} and ${{ var.AWS_REGION }}"
+          echo "${{ vars.AWS_ROLE }} and ${{ vars.AWS_REGION }}"
 
       - name: Copy .env
         run: echo "cp .env.${{ vars.ENV }} .env"
