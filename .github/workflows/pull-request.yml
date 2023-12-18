@@ -15,8 +15,15 @@ jobs:
       name: ${{ github.base_ref == 'master' && 'production' || contains(github.base_ref,'release/') && 'staging' || 'development' }}
     runs-on: ['self-hosted', 'default-runner']
     steps:
+      - name: Set ENV Variables
+        run: |
+          echo "TRAVIS_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+          echo "TRAVIS_BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
+        
       - name: Echo Value
-        run: echo "${{ var.AWS_ROLE }} and ${{ var.AWS_REGION }}"
+        run: |
+          echo "$TRAVIS_BRANCH and $TRAVIS_BUILD_NUMBER"
+          echo "${{ var.AWS_ROLE }} and ${{ var.AWS_REGION }}"
 
       - name: Copy .env
         run: echo "cp .env.${{ vars.ENV }} .env"
