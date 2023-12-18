@@ -13,10 +13,10 @@ jobs:
   main: #Job names
     environment:
       name: ${{ github.base_ref == 'master' && 'production' || contains(github.base_ref,'release/') && 'staging' || 'development' }}
-    runs-on: ['self-hosted', 'default-runner']
+    runs-on: ubuntu-latest
     steps:
       - name: Echo Value
-        run: echo "${{ var.AWS_ROLE }} and ${{ var.AWS_REGION }}"
+        run: echo "${{ vars.AWS_ROLE }} and ${{ vars.AWS_REGION }}"
 
       - name: Copy .env
         run: echo "cp .env.${{ vars.ENV }} .env"
