@@ -1,0 +1,10 @@
+name: Setup Github user
+description: 'Setup Github user'
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      name: Setup Github user
+      run: |
+        git config user.email "builds@github.com"
+        git config user.name "Github Actions"
