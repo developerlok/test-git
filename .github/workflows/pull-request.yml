@@ -1,34 +1,20 @@
 name: Pull Request Check #Workflow name
 on: #trigger
-  pull_request: # only for creating and updating
-    types: ['opened', 'synchronize']
+  workflow_dispatch:
+  pull_request:
+    types: ['opened', 'synchronize'] #create or update PR
     branches:
       - 'development'
       - 'release/**'
       - 'master'
-    paths-ignore:
+    paths-ignore: #if the changes only in the following files, the workflow will not be triggered
       - '**/CHANGELOG.md'
       - '**/package.json'
 jobs:
   main: #Job names
     environment:
-      name: ${{ github.base_ref == 'master' && 'production' || contains(github.base_ref,'release/') && 'staging' || 'development' }}
-    runs-on: ubuntu-latest
+      name: ${{ github.base_ref == 'master' && 'production' || contains(github.base_ref,'release') && 'staging' || 'development' }}
+    runs-on: ['self-hosted', 'default-runner']
     steps:
-      - name: Set ENV Variables
-        run: |
-          echo "TRAVIS_BRANCH=${{ github.head_ref }}" >> $GITHUB_ENV
-          echo "TRAVIS_BUILD_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
-        
-      - name: Echo Value
-        run: |
-          echo "$PWD"
-          echo "$GITHUB_REF and ${{ github.head_ref }} and ${{ github.base_ref }}"
-          echo "$TRAVIS_BRANCH and $TRAVIS_BUILD_NUMBER"
-          echo "${{ vars.AWS_ROLE }} and ${{ vars.AWS_REGION }}"
-
-      - name: Copy .env
-        run: echo "cp .env.${{ vars.ENV }} .env"
-
       - name: Build and run test
-        run: echo "${{ secrets.HK01_DIGITAL_NPM_TOKEN }}"
+        uses: ./.github/actions/build-and-run-test

@@ -1,0 +1,29 @@
+name: Build and run test
+description: 'Build and run test'
+inputs:
+  npm_token:
+    required: true
+    description: NPM token
+runs:
+  using: 'composite'
+  steps:
+    - name: Build test image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: false
+        tags: test
+        target: installer
+        load: true
+
+    - name: Run test
+      shell: bash
+      run: |
+        docker run --rm \
+        --entrypoint "" \
+        test bash -c "
+        yarn --frozen-lockfile &&
+        yarn tsc &&
+        yarn build &&
+        yarn test &&
+        yarn lint --quiet"
