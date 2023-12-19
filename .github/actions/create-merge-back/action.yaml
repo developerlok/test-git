@@ -14,5 +14,5 @@ runs:
         git checkout -qf master
         git pull origin master
         git fetch origin development
-        gh pr create -B development -t "Merge master to development" -b "ok-to-merge-back" --head=${{ github.run_id }}-${{ github.run_attempt }} || echo "Failed to create merge back PR!"
+        gh pr create -B development -t "Merge master to development" -b "ok-to-merge-back" || echo "Failed to create merge back PR!"
         gh pr merge --auto --merge
