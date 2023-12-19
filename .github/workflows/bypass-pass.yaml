@@ -1,0 +1,22 @@
+name: Bypass workflow #Workflow name
+on:
+  push:
+    branches:
+      - 'release/**'
+      - 'master'
+    paths:
+      - '**/CHANGELOG.md'
+      - '**/package.json'
+  pull_request:
+    types: ['opened', 'synchronize']
+    branches:
+      - 'release/**'
+      - 'master'
+    paths:
+      - '**/CHANGELOG.md'
+      - '**/package.json'
+jobs:
+  main:
+    runs-on: ['self-hosted', 'default-runner']
+    steps:
+      - run: 'echo "No build required"'
