@@ -16,6 +16,9 @@ jobs:
     environment:
       name: ${{ github.ref_name == 'master' && 'production' || contains(github.ref_name,'release/') && 'staging' || 'development' }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Setup Github user
         uses: ./.github/actions/setup-github-user
 
