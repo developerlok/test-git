@@ -12,7 +12,7 @@ on: #trigger
       - '**/package.json'
 jobs:
   main:
-    runs-on: ['self-hosted', 'default-runner']
+    runs-on: "ubuntu-latest"
     environment:
       name: ${{ github.ref_name == 'master' && 'production' || contains(github.ref_name,'release/') && 'staging' || 'development' }}
     steps:
