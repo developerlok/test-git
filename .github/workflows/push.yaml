@@ -1,0 +1,46 @@
+name: Deploy #Workflow name
+run-name: Deploy ${{ inputs.deploy_target }}
+on: #trigger
+  workflow_dispatch:
+  push:
+    branches:
+      - 'development'
+      - 'release/**'
+      - 'master'
+    paths-ignore:
+      - '**/CHANGELOG.md'
+      - '**/package.json'
+jobs:
+  main:
+    runs-on: ['self-hosted', 'default-runner']
+    environment:
+      name: ${{ github.ref_name == 'master' && 'production' || contains(github.ref_name,'release/') && 'staging' || 'development' }}
+    steps:
+      - name: Setup Node
+        if: ${{ vars.ENV != 'development' }}
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Get Node version
+        if: ${{ vars.ENV != 'development' }}
+        id: node
+        run: |
+          echo "version=$(node -v)" >> "$GITHUB_OUTPUT"
+
+      - name: Configure image tag
+        run: |
+          echo "tag=v$((${{ github.run_number }} + 100000))-build" >> $GITHUB_ENV
+          echo "TIMESTAMP=$(date)" >> $GITHUB_ENV
+          sleep 5;
+
+      - name: Bump version
+        uses: ./.github/actions/bump-version
+        with:
+          environment: ${{ vars.ENV }}
+
+      - name: Create merge back PR
+        uses: ./.github/actions/create-merge-back
+        with:
+          environment: ${{ vars.ENV }}
