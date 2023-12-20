@@ -10,6 +10,9 @@ on: #trigger
     paths-ignore: #if the changes only in the following files, the workflow will not be triggered
       - '**/CHANGELOG.md'
       - '**/package.json'
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  SWAGGER_FOLDER: ${{ github.workspace }}/s3_swagger_upload/
 jobs:
   main: #Job names
     environment:
@@ -19,5 +22,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # - name: Build and run test
-      #   uses: ./.github/actions/build-and-run-test
+      - name: Build and run test
+        uses: ./.github/actions/build-and-run-test
