@@ -16,7 +16,7 @@ runs:
       name: Release master
       if: inputs.environment == 'production'
       run: |
-        npx standard-version --dry-run --releaseCommitMessageFormat 'chore(release-production): {{currentTag}}' --no-verify
+        npx standard-version --releaseCommitMessageFormat 'chore(release-production): {{currentTag}}' --no-verify
     - shell: bash
       name: Create bump version PR
       if: inputs.environment == 'production' || inputs.environment == 'staging'
