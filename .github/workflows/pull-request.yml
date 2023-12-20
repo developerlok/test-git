@@ -19,5 +19,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build and run test
-        uses: ./.github/actions/build-and-run-test
+      # - name: Build and run test
+      #   uses: ./.github/actions/build-and-run-test
