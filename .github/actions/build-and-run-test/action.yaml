@@ -22,13 +22,15 @@ runs:
     - name: Run test
       shell: bash
       run: |
-        # docker run --rm \
-        # --entrypoint "" \
-        # test bash -c "
-        # yarn --frozen-lockfile &&
-        # yarn tsc &&
-        # yarn build &&
-        # yarn test &&
-        # yarn lint --quiet"
-        echo ${{ inputs.swagger_folder }}
-        echo $PWD/s3_swagger_upload/
+        docker run --rm \
+        -v  ${{ inputs.swagger_folder }}:/s3_swagger_upload/ \
+        --entrypoint "" \
+        test bash -c "
+        yarn --frozen-lockfile &&
+        yarn tsc &&
+        yarn build &&
+        yarn test &&
+        yarn lint --quiet &&
+        echo ${{ inputs.swagger_folder }} &&
+        echo $PWD/s3_swagger_upload/ &&
+        echo 'abc' > /s3_swagger_upload/abc.php"
