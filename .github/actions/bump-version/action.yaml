@@ -16,6 +16,8 @@ runs:
       name: Release master
       if: inputs.environment == 'production'
       run: |
+        echo ${GITHUB_REF#refs/heads/}
+        git checkout ${GITHUB_REF#refs/heads/}
         git branch
         npx standard-version --dry-run --releaseCommitMessageFormat 'chore(release-production): {{currentTag}}' --no-verify
     - shell: bash
