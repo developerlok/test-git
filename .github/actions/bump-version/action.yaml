@@ -16,14 +16,10 @@ runs:
       name: Release master
       if: inputs.environment == 'production'
       run: |
-        echo ${GITHUB_REF#refs/heads/}
-        git checkout ${GITHUB_REF#refs/heads/}
-        git branch
         npx standard-version --dry-run --releaseCommitMessageFormat 'chore(release-production): {{currentTag}}' --no-verify
     - shell: bash
       name: Create bump version PR
-      #if: inputs.environment == 'production' || inputs.environment == 'staging'
-      if: inputs.environment == 'staging'
+      if: inputs.environment == 'production' || inputs.environment == 'staging'
       run: |
         git checkout -b bump/${{ inputs.environment }}-${{ github.run_number }}
         git fetch --all
