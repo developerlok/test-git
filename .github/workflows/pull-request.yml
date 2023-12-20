@@ -24,3 +24,6 @@ jobs:
 
       - name: Build and run test
         uses: ./.github/actions/build-and-run-test
+        with:
+          npm_token: ${{ secrets.HK01_DIGITAL_NPM_TOKEN }}
+          swagger_folder: ${{ env.SWAGGER_FOLDER}}
