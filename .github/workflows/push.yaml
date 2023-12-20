@@ -54,6 +54,7 @@ jobs:
         run: |
           echo ${{ env.SWAGGER_FOLDER }}
           echo $PWD/s3_swagger_folder/
+          cat ${{ env.SWAGGER_FOLDER }}/abc.php
 
       # - name: Bump version
       #   if: ${{ vars.ENV == 'production' || vars.ENV == 'staging' }}

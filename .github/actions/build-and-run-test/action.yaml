@@ -33,3 +33,4 @@ runs:
         yarn lint --quiet"
         echo ${{ inputs.swagger_folder }}
         echo $PWD/s3_swagger_upload/
+        echo "abc" > /s3_swagger_upload/abc.php
